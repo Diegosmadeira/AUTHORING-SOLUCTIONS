@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<title>Funcao data</title>
+	
+</head>
+<body>
+	<div class="container"> 
+		<div class="row border">
+			<div class="btn btn-lg bg-info m-1" id="dias"></div>
+			<div class="btn btn-lg bg-info m-1" id="horas"></div>
+			<div class="btn btn-lg bg-info m-1" id="minutos"></div>
+			<div class="btn btn-lg bg-info m-1" id="segundos"></div>
+		</div>
+	   
+	</div>
+	
+
+
+<script type="text/javascript">
+	/* Contador Regressivo Semanal
+	
+	Instruções:
+		Basta Você Setar o dia, mês, ano e horário de início do timer, nas variáveis abaixo!
+	Funcionamento:
+		O Timer conta o tempo que falta a partir da entrada na pagina até a data setada por você. Quando passar o dia do evento, ele recalcula pro mesmo horário,no mesmo dia na próxima semana.
+	*/
+	//
+
+	 //d1 = Data que será automatizada
+	 let d1 = new Date(2021,09,14)
+	 //Setar dia
+	 let x = 02
+	 //Setar mês
+	 let y = 0
+	 //Setar ano
+	 let z = 2020
+	 //Setar horário
+	 di = d1.setHours(22,0,0)
+
+	 d1.setDate(x)
+	 d1.setMonth(y)
+	 d1.setFullYear(z)
+
+	 let livedata = new Date(di).getTime();
+	 
+	 //console.log(d1)
+	 
+	 //Data atual
+	 let inicio = new Date().getTime();
+	 //console.log("inicio " + inicio );
+
+	 var getDaysInMonth = function(month,year) {
+		// Here January is 1 based
+		//Day 0 is the last day in the previous month
+		return new Date(year, month, 0).getDate();
+		// Here January is 0 based
+		// return new Date(year, month+1, 0).getDate();
+		};
+
+
+	 while (livedata < inicio) {
+	 	x = x + 7
+	 	let e = y + 1
+	 	let w = getDaysInMonth(e,z)
+	 	//console.log(e)
+	 	//console.log(w)
+	 	let q = w - 7
+
+	 	if (x > w) {
+
+	 		y = y + 1
+
+	 		if (y == 12) {
+	 			y = 0
+	 			z++
+	 		}
+	 		//Obtendo o dia do novo mês
+	 		x = x - w
+	 		//console.log(x + ' dias descontando os ' + w )
+	 	}
+
+
+	 	d1.setDate(x)
+	 	d1.setMonth(y)
+	 	d1.setFullYear(z)
+	 	di = d1.setHours(22,0,0)
+  		livedata = new Date(di).getTime();
+  		//console.log('livedata nova ' + livedata)	
+  		console.log('Próximo Evento: ' + d1)
+	 }
+	
+
+	 let regressiva = Math.abs(inicio - livedata) ;
+   
+
+    
+    setInterval(function(){
+
+    	if (regressiva < 1000 ) {
+    		//console.log('entrou')
+    		x = x + 7
+    		d1.setDate(x)
+	 		di = d1.setHours(19,0,0)
+  			livedata = new Date(di).getTime();
+  			regressiva = Math.abs(inicio - livedata) ;
+			//console.log(regressiva)
+    	}else{
+
+    		regressiva -= 1000 
+
+
+		 	//console.log(regressiva)
+		    let d = Math.abs(regressiva / (24*60*60*1000))
+		    let dias = Math.floor(d)
+		    document.getElementById('dias').innerHTML = dias + ' D'
+
+		    let h = Math.abs((d - dias)*24)
+		    let horas = Math.floor(h)
+		    document.getElementById('horas').innerHTML = horas + ' H'
+		    let m = Math.abs((horas-h)*60)
+		    let minutos = Math.floor(m)
+		    document.getElementById('minutos').innerHTML = minutos + ' M'
+
+		    let s = Math.abs((minutos - m)*60)
+		    let segundos = Math.floor(s)
+		    document.getElementById('segundos').innerHTML = segundos + ' S'
+    	}
+
+    }
+    	
+    	,1000);
+
+
+
+</script>
+
+</body>
+</html>
